@@ -15,9 +15,51 @@ struct ContentView: View {
     
     
     //MARK: - FUNCTIONS
-    func save() {
-        dump(notes)
+    func getDocumentDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return paths[0]
     }
+    
+    func save() {
+//        dump(notes)
+        
+        do {
+            // 1. convert the notes array to data using jsonEncoder
+            let jsonData = try JSONEncoder().encode(notes)
+            
+            // 2. create a new url to save the file using the getDocumentDirctory
+            let url = getDocumentDirectory().appendingPathComponent("notes")
+            
+            // 3. write the data to the given url
+            try jsonData.write(to: url)
+        } catch {
+            print("Saving Failed: \(error)")
+        }
+        
+    }
+    
+    func load() {
+        DispatchQueue.main.async {
+            do {
+                // 1. get the notes url path
+                let url = getDocumentDirectory().appendingPathComponent("notes")
+                // 2. create a new property for the data
+                let data = try Data(contentsOf: url)
+                // 3. decode the data
+                notes = try JSONDecoder().decode([Note].self, from: data)
+            } catch {
+                print("Loading Failed: \(error)")
+            }
+        }
+    }
+    
+    func delete(at offsets: IndexSet) {
+        withAnimation{
+            notes.remove(atOffsets: offsets)
+            save()
+        }
+    }
+    
     //MARK: - BODY
     var body: some View {
         VStack {
@@ -54,9 +96,24 @@ struct ContentView: View {
             
             Spacer()
             
-            Text("\(notes.count)")
+            List {
+                ForEach(0..<notes.count, id: \.self) { i in
+                    HStack {
+                        Capsule()
+                            .frame(width: 4)
+                            .foregroundColor(.accentColor)
+                        Text(notes[i].text)
+                            .lineLimit(1)
+                            .padding(.leading, 5)
+                    }// : HStack
+                }
+                .onDelete(perform: delete)
+            }
         }//: VStack
         .navigationTitle("Notes")
+        .onAppear(perform: {
+            load()
+        })
     }
 }
 
