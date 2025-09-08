@@ -12,7 +12,7 @@ A lightweight and intuitive **Apple Watch app** for quickly writing, saving, and
 
 ## 📸 Screenshot
 
-![Notes Watch App Screenshot](Simulator%20Screenshot%20-%20Apple%20Watch%20Series%2010%20\(46mm\)%20-%202025-09-08%20at%2005.57.51.png)
+<img width="416" height="496" alt="Notes Watch App Screenshot" src="https://github.com/user-attachments/assets/bae27204-89a0-4fa5-b002-d6ba226f5780" />
 
 ## 🛠 Tech Stack
 
