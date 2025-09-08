@@ -25,8 +25,8 @@ A lightweight and intuitive **Apple Watch app** for quickly writing, saving, and
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/NotesWatchApp.git
-   cd NotesWatchApp
+   git clone https://github.com/omar-alshyokh/Notes-Watch-App-SwiftUI
+   cd Notes Watch App
    ```
 
 2. Open in Xcode:
